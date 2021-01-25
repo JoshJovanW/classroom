@@ -87,6 +87,4 @@ def main():
         else:
             print("That is not a valid action")
 
-    
-
 main()
