@@ -15,16 +15,18 @@ class Classroom:
         ranking = []
         
         for students in self.students:
-            students.scores.find_average()
+            if len(students.scores.test) != 0 or len(students.scores.quiz) != 0 or students.scores.finals != 0:
+                students.scores.find_average()
             ranking.append(students)
 
-        for index, scores in enumerate(ranking):
-            for idx, score in enumerate(ranking):
-                if scores.scores.average > ranking[index].scores.average:
-                    score_string = score
-                    ranking[idx] = ranking[index]
-                    ranking[index] = score_string
         
+        for index, students in enumerate(ranking):
+            for idx, student in enumerate(ranking):
+                if student.scores.average > ranking[index].scores.average:
+                    person = student
+                    ranking[idx] = ranking[index]
+                    ranking[index] = person
+
         highest_3 = [ranking[-1], ranking[-2], ranking[-3]]
 
         return highest_3
@@ -32,7 +34,7 @@ class Classroom:
     def verify_to_end_semester(self):
         verified = False
         for students in self.students:
-            if len(students.scores.test) >= 3 and len(students.scores.test) <= 6 and students.scores.finals != None and len(students.scores.quiz) != 0:
+            if len(students.scores.test) >= 3 and len(students.scores.test) <= 6 and students.scores.finals != 0 :
                 verified = True
             else:
                 verified = False
@@ -59,13 +61,13 @@ class Classroom:
             for index, value in enumerate(assessment_scores):
                 if student.id == assessment_scores[index][0]:
                     if int(assessment_scores[index][1]) < 0 or int(assessment_scores[index][1]) > 100:
-                        fails.append(assessment_scores[index][0])
+                        fails.append(assessment_scores[index])
                     else:
-                        sucesses.append(int(assessment_scores[index][1]))
+                        sucesses.append(assessment_scores[index])
                                
         for index, value in enumerate(assessment_scores):        
             if assessment_scores[index][0] not in student_id:
-                fails.append(assessment_scores[index][0])
+                fails.append(assessment_scores[index])
 
         record["sucesses"] = sucesses
         record["fails"] = fails
@@ -80,11 +82,6 @@ class Classroom:
             
 
 
-
-
-
-
-    
 
 
 
