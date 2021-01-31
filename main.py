@@ -26,7 +26,7 @@ def main():
 
                 for student in classroom.students: 
                     for index, value in enumerate(records["sucesses"]):
-                        if student.id == records["sucesses"][[index][0]]:
+                        if student.id == records["sucesses"][index][0]:
                             student.scores.add_test_score(int(records["sucesses"][index][1]))
 
                 if len(records["fails"]) > 0:
@@ -35,7 +35,7 @@ def main():
                     continue
 
                 print("You succesfully inputted every score you inputted.")
-                
+
             elif type_of_score == "quiz":
                 records = classroom.verify_input()
 
