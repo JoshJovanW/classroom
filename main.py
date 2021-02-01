@@ -31,10 +31,10 @@ def main():
 
                 if len(records["fails"]) > 0:
                     print(f'succesfully inputted {len(records["sucesses"])} scores.\n')
-                    print(f'you failed to input these id scores {len(records["fails"])}')
+                    print(f'you failed to input these id scores {records["fails"]}')
                     continue
 
-                print("You succesfully inputted every score you inputted.")
+                print("You succesfully inputted every score you inputted.\n")
 
             elif type_of_score == "quiz":
                 records = classroom.verify_input()
@@ -47,10 +47,10 @@ def main():
                  
                 if len(records["fails"]) > 0:
                     print(f'succesfully inputted {len(records["sucesses"])} scores.\n')
-                    print(f'you failed to input these id scores {len(records["fails"])}')
+                    print(f'you failed to input these id scores {records["fails"]}')
                     continue
 
-                print("You succesfully inputted every score you inputted.")
+                print("You succesfully inputted every score you inputted.\n")
 
             
             elif type_of_score == "finals":
@@ -63,28 +63,47 @@ def main():
                 
                 if len(records["fails"]) > 0:
                     print(f'succesfully inputted {len(records["sucesses"])} scores.\n')
-                    print(f'you failed to input these id scores {len(records["fails"])}')
+                    print(f'you failed to input these id scores {records["fails"]}')
                     continue
 
-                print("You succesfully inputted every score you inputted.")
+                print("You succesfully inputted every score you inputted.\n")
         elif action == "get.ranking":
             highest_3 = classroom.get_ranking()
 
-            print(f"The first rank is {highest_3[0].name}\n")
-            print(f"The second rank is {highest_3[1].name}\n")
-            print(f"The third rank is {highest_3[2].name}\n")
+            print(f"The first rank is {highest_3[0].name} with score {highest_3[0].scores.average}\n")
+            print(f"The second rank is {highest_3[1].name} with score {highest_3[1].scores.average}\n")
+            print(f"The third rank is {highest_3[2].name} with score {highest_3[2].scores.average}\n")
                 
         elif action == "end.semester":
             verify = classroom.verify_to_end_semester()
-
-            if verify == False:
-                print("The requirements for the semester hasn't been reached. Cant end semester.\n")
-
-            elif verify == True:
-                print("The semester has been ended. Thank you for using this program.")
+            
+            if len(verify["insufficient_tests"]) == 0  and len(verify["overinput_tests"]) == 0 and len(verify["no_finals"]) == 0:
+                print("successfully ended the semester.")
+                break
                 exit = True
-        
+            
+            print("can't end semester because: \n")
+
+            print("needs Tests: \n")
+
+            for failures in verify["insufficient_tests"]:
+                print(failures[0].id, failures[1])
+            
+            print("\n")
+
+            print("over inputted Tests: \n")
+            
+            for failures in verify["overinput_tests"]:
+                print(failures[0].id, failures[1])
+
+            print("\n")
+
+            print("needs_finals: \n")
+
+            for failures in verify["no_finals"]:
+                print(failures[0].id, failures[1])
+
         else:
-            print("That is not a valid action")
+            print("\nThat is not a valid action")
 
 main()
