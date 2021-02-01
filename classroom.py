@@ -32,17 +32,27 @@ class Classroom:
         return highest_3
 
     def verify_to_end_semester(self):
-        verified = False
+        verification = {}
+        insufficient_tests = []
+        overinput_tests = []
+        no_finals = []
         for students in self.students:
-            if len(students.scores.test) >= 3 and len(students.scores.test) <= 6 and students.scores.finals != 0 :
-                verified = True
-            else:
-                verified = False
-                break
-
+            if len(students.scores.test) < 3: 
+                insufficient_tests.append([students, f"needs to add { 3 - len(students.scores.test)} test scores"])
+        
+        for students in self.students:
+            if len(students.scores.test) > 6:
+                overinput_tests.append([students, f"there is an extra {len(students.scores.test) - 6} test score"])
+        
+        for students in self.students:
+            if students.scores.finals == 0:
+                no_finals.append([students, "have not been inputted the final's score"])
             
-        return verified
- 
+        verification["insufficient_tests"] = insufficient_tests
+        verification["overinput_tests"] = overinput_tests
+        verification["no_finals"] = no_finals
+        
+        return verification
     def verify_input(self):
         record = {}
 
@@ -82,6 +92,11 @@ class Classroom:
             
 
 
+
+
+
+
+    
 
 
 
