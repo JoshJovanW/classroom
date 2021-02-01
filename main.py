@@ -28,6 +28,13 @@ def main():
                     for index, value in enumerate(records["sucesses"]):
                         if student.id == records["sucesses"][index][0]:
                             student.scores.add_test_score(int(records["sucesses"][index][1]))
+                
+                if len(records["reached_tests"]) != 0:
+                    print("\nreached maximum limit: \n")
+                    for student in records["reached_tests"]:
+                        print(f"{student.id} has reached maximum limit of 6 tests")
+                    
+                    print("\n")
 
                 if len(records["fails"]) > 0:
                     print(f'succesfully inputted {len(records["sucesses"])} scores.\n')
@@ -61,10 +68,19 @@ def main():
                         if student.id == records["sucesses"][index][0]:
                             student.scores.set_finals_score(int(records["sucesses"][index][1]))
                 
+                if len(records["reached_finals"]) != 0:
+                    print("\nreached maximum limit: \n")
+                    for student in records["reached_finals"]:
+                        print(f"{student.id} has reached maximum limit for finals")
+
+                    print("\n")
+
+
                 if len(records["fails"]) > 0:
                     print(f'succesfully inputted {len(records["sucesses"])} scores.\n')
                     print(f'you failed to input these id scores {records["fails"]}')
                     continue
+
 
                 print("You succesfully inputted every score you inputted.\n")
         elif action == "get.ranking":
@@ -77,32 +93,37 @@ def main():
         elif action == "end.semester":
             verify = classroom.verify_to_end_semester()
             
-            if len(verify["insufficient_tests"]) == 0  and len(verify["overinput_tests"]) == 0 and len(verify["no_finals"]) == 0:
+            if len(verify["insufficient_tests"]) == 0 and len(verify["no_finals"]) == 0 and len(verify["imbalance"]) == 0:
                 print("successfully ended the semester.")
                 break
                 exit = True
             
             print("can't end semester because: \n")
 
-            print("needs Tests: \n")
+            if len(verify["insufficient_tests"]) != 0:
+                print("needs Tests: \n")
 
-            for failures in verify["insufficient_tests"]:
-                print(failures[0].id, failures[1])
+                for failures in verify["insufficient_tests"]:
+                    print(failures[0].id, failures[1])
             
-            print("\n")
+                print("\n")
 
-            print("over inputted Tests: \n")
+            if len(verify["no_finals"]) != 0:
+                print("needs_finals: \n")
+
+                for failures in verify["no_finals"]:
+                    print(failures[0].id, failures[1])
+
+                print("\n")
+
             
-            for failures in verify["overinput_tests"]:
-                print(failures[0].id, failures[1])
+            if len(verify["imbalance"]) != 0:
+                print("number of test not the same: ")
 
-            print("\n")
+                for failures in verify["imbalance"]:
+                    print(failures[0].id, failures[1])
 
-            print("needs_finals: \n")
-
-            for failures in verify["no_finals"]:
-                print(failures[0].id, failures[1])
-
+                print("\n")
         else:
             print("\nThat is not a valid action")
 
