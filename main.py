@@ -20,10 +20,10 @@ def main():
             print("The system works in bulk input.\nThe format of the scores is 'std-1:80' use a comma to seperate students.")
 
             type_of_score = input("Which score do you want to add? Type 'Test', 'Quiz', or 'finals'.\n").lower()
+            
+            records = classroom.verify_input()
 
             if type_of_score == "test":
-                records = classroom.verify_input()
-
                 for student in classroom.students: 
                     for index, value in enumerate(records["sucesses"]):
                         if student.id == records["sucesses"][index][0]:
@@ -36,33 +36,13 @@ def main():
                     
                     print("\n")
 
-                if len(records["fails"]) > 0:
-                    print(f'succesfully inputted {len(records["sucesses"])} scores.\n')
-                    print(f'you failed to input these id scores {records["fails"]}')
-                    continue
-
-                print("You succesfully inputted every score you inputted.\n")
-
             elif type_of_score == "quiz":
-                records = classroom.verify_input()
-
                 for student in classroom.students: 
                     for index, value in enumerate(records["sucesses"]):
                         if student.id == records["sucesses"][index][0]:
                             student.scores.add_quiz_score(int(records["sucesses"][index][1]))
                
-                 
-                if len(records["fails"]) > 0:
-                    print(f'succesfully inputted {len(records["sucesses"])} scores.\n')
-                    print(f'you failed to input these id scores {records["fails"]}')
-                    continue
-
-                print("You succesfully inputted every score you inputted.\n")
-
-            
             elif type_of_score == "finals":
-                records = classroom.verify_input()
-
                 for student in classroom.students: 
                     for index, value in enumerate(records["sucesses"]):
                         if student.id == records["sucesses"][index][0]:
@@ -75,14 +55,14 @@ def main():
 
                     print("\n")
 
-
-                if len(records["fails"]) > 0:
+            if len(records["fails"]) > 0:
                     print(f'succesfully inputted {len(records["sucesses"])} scores.\n')
                     print(f'you failed to input these id scores {records["fails"]}')
                     continue
 
+            print("You succesfully inputted every score you inputted.\n")
 
-                print("You succesfully inputted every score you inputted.\n")
+                
         elif action == "get.ranking":
             highest_3 = classroom.get_ranking()
 
