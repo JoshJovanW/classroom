@@ -87,18 +87,16 @@ class Classroom:
                         fails.append(assessment_scores[index])
                     else:
                         sucesses.append(assessment_scores[index])
-                               
-        for index, value in enumerate(assessment_scores):        
-            if assessment_scores[index][0] not in student_id:
-                fails.append(assessment_scores[index])
 
-        for student in self.students:
             if len(student.scores.test) == 6:
                 reached_requirements_test.append(student)
 
-        for student in self.students:    
             if student.scores.finals != 0:
                 reached_requirements_finals.append(student)
+
+        for index, value in enumerate(assessment_scores):
+            if assessment_scores[index][0] not in student_id:
+                fails.append(assessment_scores[index])
 
         record["sucesses"] = sucesses
         record["fails"] = fails
@@ -120,8 +118,6 @@ class Classroom:
 
 
     
-
-
 
 
 
