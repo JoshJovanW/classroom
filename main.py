@@ -95,8 +95,12 @@ def main():
             
             if len(verify["insufficient_tests"]) == 0 and len(verify["no_finals"]) == 0 and len(verify["imbalance"]) == 0:
                 print("successfully ended the semester.")
-                break
-                exit = True
+                for student in classroom.students:
+                    student.scores.test.clear()
+                    student.scores.quiz.clear()
+                    student.scores.finals = 0 
+    
+                continue
             
             print("can't end semester because: \n")
 
