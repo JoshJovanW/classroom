@@ -41,30 +41,24 @@ class Classroom:
             if len(students.scores.test) < 3: 
                 insufficient_tests.append([students, f"needs to add { 3 - len(students.scores.test)} test scores"])
         
-        for students in self.students:
             if students.scores.finals == 0:
                 no_finals.append([students, "have not been inputted the final's score"])
 
-        number_of_tests = 0
-        number_of_quiz = 0
+            number_of_tests = 0
+            number_of_quiz = 0
+    
+            if len(students.scores.test) > number_of_tests:
+                number_of_tests = len(students.scores.test)
 
-        for student in self.students:
-            if len(student.scores.test) > number_of_tests:
-                number_of_tests = len(student.scores.test)
-
-        for student in self.students:
-            if len(student.scores.quiz) > number_of_quiz:
-                number_of_quiz = len(student.scores.quiz)
-
-        for students in self.students:
+            if len(students.scores.quiz) > number_of_quiz:
+                number_of_quiz = len(students.scores.quiz)
+        
             if len(students.scores.test) < number_of_tests:
                 imbalance.append([students, f"needs {number_of_tests - len(students.scores.test)} more test score"])
 
-        for students in self.students:
             if len(students.scores.quiz) < number_of_quiz:
                 imbalance.append([students, f"needs {number_of_quiz - len(students.scores.quiz)} more quiz score"])
                 
-             
         verification["insufficient_tests"] = insufficient_tests
         verification["no_finals"] = no_finals
         verification["imbalance"] = imbalance
@@ -126,6 +120,8 @@ class Classroom:
 
 
     
+
+
 
 
 
